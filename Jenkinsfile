@@ -4,7 +4,6 @@ node('scripted') {
         branch: 'scripted'    
     }
     stage('build') {
-      sh ' mvn clean install'
-      sh ' mvn clean package'
+      sh './mvnw package'
     }
 }
