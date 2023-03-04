@@ -5,9 +5,12 @@ node('scripted') {
     }
 }
     
-     stage('Build') {
-            steps {
-                sh 'sudo apt install gradle -y'
-                sh './gradlew build'
+     stage('Install Gradle') {
+       steps {
+         sh 'sudo apt-get install -y gradle'
+         sh 'gradlew build'
+    }
+}
+
     }
 }
