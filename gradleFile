@@ -6,6 +6,7 @@ node('scripted') {
 }  
     stage('Build') {
       steps {
+         sh 'gradle init'
          sh 'gradle build'
       }
    }
