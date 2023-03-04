@@ -4,6 +4,6 @@ node('scripted') {
         branch: 'gradleFile'    
     }
     stage('build') {
-      sh 'gradle'
+      sh 'gradlew'
     }
 }
