@@ -4,8 +4,11 @@ node('scripted') {
           branch: 'gradleFile'    
     }
 }  
-    stage('Build') {
-      steps {
-         sh 'gradle init'
-      }
-   }
+    stages {
+        stage('Build') {
+            steps {
+                sh 'gradle build'
+            }
+        }
+    }
+}
