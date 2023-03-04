@@ -5,16 +5,9 @@ node('scripted') {
     }
 }
     
-    // Set up the Gradle environment
-    stage('Set up Gradle') {
-        def gradleVersion = '8.0.2'
-        def gradleHome = "/opt/gradle/gradle-${gradleVersion}"
-        def gradleCommand = "./gradlew"
-     } 
-}
-        env.GRADLE_HOME = gradleHome
-        env.PATH = "${GRADLE_HOME}/bin:${env.PATH}
-    stage('build') {
-      sh 'gradlew clean build'
+     stage('Build') {
+            steps {
+                sh 'sudo apt install gradle -y'
+                sh './gradlew build'
     }
 }
