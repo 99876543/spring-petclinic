@@ -1,15 +1,15 @@
 pipeline {
     agent any
     stages {
-        stage('version control') {
-        git url: 'https://github.com/gradle/gradle-site-plugin.git',
-            branch: 'gradleFile'
+        stage {
+
         }
     }   
         stage('Build') {
-          steps {
-            sh './gradlew build'
+            steps {
+              sh './gradle clean build'
            
-            }
+           }
         }
-    }
+    } 
+}
