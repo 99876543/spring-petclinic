@@ -15,6 +15,6 @@ node('scripted') {
         env.GRADLE_HOME = gradleHome
         env.PATH = "${gradleHome}/bin:${env.PATH}
     stage('build') {
-      sh 'gradlew'
+      sh 'gradlew clean build'
     }
 }
