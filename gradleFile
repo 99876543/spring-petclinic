@@ -8,6 +8,5 @@ node('scripted') {
      stage('Install Gradle') {
        steps {
          sh 'sudo apt-get install -y gradle'
-         sh 'gradlew build'
     }
 }
