@@ -6,6 +6,6 @@ node('scripted') {
 }  
         stage('Build') {
             steps {
-                sh './gradlew build'
+              sh './gradlew build'
             }
         }
