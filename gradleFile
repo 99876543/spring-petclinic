@@ -9,5 +9,5 @@ node('scripted') {
                 sh './gradlew build'
             }
         }
-   }
+    }
 }
