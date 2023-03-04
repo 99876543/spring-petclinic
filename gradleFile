@@ -3,11 +3,18 @@ node('scripted') {
       git url: 'https://github.com/99876543/spring-petclinic.git',
         branch: 'gradleFile'    
     }
-}
-    
-     stage('Install Gradle') {
-       steps {
-         sh 'sudo apt install -y gradle'
-         sh 'gradlew build'
+}  
+       environment {
+        GRADLE_HOME = '/opt/gradle'
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                withEnv(["PATH+GRADLE=$GRADLE_HOME/bin"]) {
+                    sh './gradlew build'
+                }
+            }
+        }
     }
 }
