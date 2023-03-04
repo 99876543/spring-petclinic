@@ -6,10 +6,9 @@ pipeline {
             branch: 'gradleFile'
         }
     }   
-    stages {
         stage('Build') {
-            steps {
-              sh './gradlew build'
+          steps {
+            sh './gradlew build'
            
             }
         }
