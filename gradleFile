@@ -11,9 +11,9 @@ node('scripted') {
         def gradleHome = "/opt/gradle/gradle-${gradleVersion}"
         def gradleCommand = "./gradlew"
      } 
-  
+}
         env.GRADLE_HOME = gradleHome
-        env.PATH = "${gradleHome}/bin:${env.PATH}
+        env.PATH = "${GRADLE_HOME}/bin:${env.PATH}
     stage('build') {
       sh 'gradlew clean build'
     }
