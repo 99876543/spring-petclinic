@@ -8,11 +8,12 @@ pipeline {
        }
     }
       stage('Define variable') {
-        steps {
-          Define a variable called "gradleFile"
-          def gradleFile = new File("build.gradle")
-          Use the "gradleFile" variable to load the Gradle script
-          def gradle = new GroovyClassLoader().parseClass(gradleFile)
+         steps {
+                Define a variable and use the GroovyClassLoader step to load the Gradle script
+                script {
+                    def gradleFile = new File("build.gradle")
+                    def gradle = new GroovyClassLoader().parseClass(gradleFile)
+                    println gradle
          }
       }
       stage('build') {
