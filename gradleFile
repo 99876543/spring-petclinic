@@ -7,6 +7,15 @@ pipeline {
              branch: 'gradleFile'
         }
       }
+      stages {
+        stage('Example') {
+            steps {
+              Define a variable called "gradleFile"
+              def gradleFile = new File("build.gradle")
+              Use the "gradleFile" variable to load the Gradle script
+              def gradle = new GroovyClassLoader().parseClass(gradleFile)
+            }
+      }
       stage('build') {
          steps { 
            sh './gradle build'
