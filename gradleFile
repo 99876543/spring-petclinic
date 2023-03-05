@@ -8,7 +8,7 @@ pipeline {
         }
       }
     stages {
-      stage('Example') {
+      stage('Define variable') {
         steps {
           Define a variable called "gradleFile"
           def gradleFile = new File("build.gradle")
