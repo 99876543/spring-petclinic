@@ -1,24 +1,19 @@
 pipeline {
     agent any
 
-    environment {
-    GRADLE_HOME/bin:$(PATH)
-    GRADLE_VERSION = '7.4.2'
-    }
-    }
     stages {
         stage('Checkout') {
             steps {
-                sh './gradle build'
+                git url: 'https://github.com/99876543/spring-petclinic.git',
+                checkout scm
             }
         }
 
         stage('Build') {
             steps {
-                // Use the Gradle executable to build the project
-                sh "${env.GRADLE_HOME}/bin/gradle wrapper"
-           }
+                sh './gradlew build'
+            }
         }
     }
 }
-}
+
