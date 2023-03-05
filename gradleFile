@@ -2,10 +2,10 @@ pipeline {
     agent any
 
     environment {
-         GRADLE_HOME/bin:$(PATH)
-         GRADLE_VERSION = '7.4.2'
+    GRADLE_HOME/bin:$(PATH)
+    GRADLE_VERSION = '7.4.2'
     }
-
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -17,8 +17,7 @@ pipeline {
             steps {
                 // Use the Gradle executable to build the project
                 sh "${env.GRADLE_HOME}/bin/gradle wrapper"
-                sh "./gradlew build"
-            }
+           }
         }
     }
 }
