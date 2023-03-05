@@ -2,10 +2,10 @@ pipeline {
     agent { label gradleFile }
     stages {
       stage('clone code') {
-        steps {
+       steps {
           git url: 'https://github.com/99876543/spring-petclinic.git',
              branch: 'gradleFile'
-        }
+      }
     }
     stages {
       stage('Define variable') {
