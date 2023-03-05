@@ -4,22 +4,22 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                   Checkout the source code
-                   git url: 'https://github.com/99876543/spring-petclinic.git',
-                        branch: 'declarative'
+              Checkout the source code
+              git url: 'https://github.com/99876543/spring-petclinic.git',
+                  branch: 'declarative'
                 
-                   Set up the Gradle environment
-                withGradle {
-                       Build the project
-                    sh './gradlew build'
+              Set up the Gradle environment
+              withGradle {
+                  Build the project
+                  sh './gradlew build'
+                    }
                 }
             }
-        }
     }
     
     post {
         always {
-               Archive the build artifacts
+            Archive the build artifacts
             archiveArtifacts artifacts: 'target/*.jar', allowEmptyArchive: true
         }
     }
