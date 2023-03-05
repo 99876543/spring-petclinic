@@ -1,17 +1,16 @@
 pipeline {
-    agent any
-    stages {
-        stage('Checkout') {
-            steps {
-                git url: 'https://github.com/99876543/spring-petclinic.git',
-                checkout scm
-            }
-        }
-        stage('Build') {
-            steps {
-              sh './gradlew build'
-            }
-        }
-    }
+   agent any
+   stages {
+       stage('Checkout') {
+           steps {
+               git url: 'https://github.com/spring-projects/spring-petclinic.git'
+           }
+       }
+       stage('Build') {
+           steps {
+               sh './gradlew build'
+           }
+       }
+   }
 }
 
