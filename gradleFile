@@ -6,7 +6,7 @@ pipeline {
           git url: 'https://github.com/99876543/spring-petclinic.git',
              branch: 'gradleFile'
         }
-      }
+    }
     stages {
       stage('Define variable') {
         steps {
@@ -14,7 +14,7 @@ pipeline {
           def gradleFile = new File("build.gradle")
           Use the "gradleFile" variable to load the Gradle script
           def gradle = new GroovyClassLoader().parseClass(gradleFile)
-            }
+         }
       }
       stage('build') {
         steps { 
