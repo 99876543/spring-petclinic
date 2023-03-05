@@ -1,27 +1,16 @@
 pipeline {
-    agent any
-    
+    agent { label gradleFile }
     stages {
-        stage('Build') {
-            steps {
-              Checkout the source code
-              git url: 'https://github.com/99876543/spring-petclinic.git',
-                  branch: 'declarative'
-                
-              Set up the Gradle environment
-              withGradle {
-                  Build the project
-                  sh './gradlew build'
-                    }
-                }
-            }
-    }
-    
-    post {
-        always {
-            Archive the build artifacts
-            archiveArtifacts artifacts: 'target/*.jar', allowEmptyArchive: true
+      stage('clone code') {
+       steps {
+          git url: 'https://github.com/99876543/spring-petclinic.git',
+             branch: 'gradleFile'
         }
-    }
+      }
+      stage('build') {
+         steps { 
+           sh './gradle build'
+        }       
+      }
+   }
 }
- 
