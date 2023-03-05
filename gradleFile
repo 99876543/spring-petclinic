@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        {GRADLE_HOME}/bin:${PATH}
+        (GRADLE_HOME)/bin:$(PATH)
         GRADLE_VERSION = '7.4.2'
     }
 
