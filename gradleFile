@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         {GRADLE_HOME}/bin:${PATH}
-        // Set the Gradle version to use
         GRADLE_VERSION = '7.4.2'
     }
 
