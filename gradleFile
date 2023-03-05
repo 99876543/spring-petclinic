@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        GRADLE_HOME = tool name: 'Gradle', type: 'gradle'
+        {GRADLE_HOME}/bin:${PATH}
         // Set the Gradle version to use
         GRADLE_VERSION = '7.4.2'
     }
@@ -22,4 +22,5 @@ pipeline {
             }
         }
     }
+}
 }
