@@ -1,26 +1,25 @@
 pipeline {
-    agent { label gradleFile }
+    agent any
+
+    environment {
+        GRADLE_HOME = tool name: 'Gradle', type: 'gradle'
+        // Set the Gradle version to use
+        GRADLE_VERSION = '7.4.2'
+    }
+
     stages {
-      stage('clone code') {
-      steps {
-          git url: 'https://github.com/99876543/spring-petclinic.git',
-             branch: 'gradleFile'
+        stage('Checkout') {
+            steps {
+                sh './gradle build'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                // Use the Gradle executable to build the project
+                sh "${env.GRADLE_HOME}/bin/gradle wrapper"
+                sh "./gradlew build"
+            }
+        }
     }
-      }
-      stage('Define variable') {
-      steps {
-         Define a variable and use the GroovyClassLoader step to load the Gradle script
-         script {
-           def gradleFile = new File("build.gradle")
-           def gradle = new GroovyClassLoader().parseClass(gradleFile)
-           println gradle
-    }
-      }
-      stage('build') {
-      steps { 
-        sh './gradle build'
-        }       
-      }
-   }
-}
 }
