@@ -1,4 +1,4 @@
-pipeline {
+<< HEAD
     agent { label GIT }
     stages {
       stage('clone code') {
@@ -14,4 +14,3 @@ pipeline {
         }       
       }
    }
-}
