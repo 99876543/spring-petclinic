@@ -1,10 +1,10 @@
-<< HEAD
+pipeline {
     agent { label GIT }
     stages {
       stage('clone code') {
        steps {
           git url: 'https://github.com/99876543/spring-petclinic.git',
-             branch: 'gradleFile'
+             branch: 'declarative'
         }
       }
       stage('build') {
@@ -14,3 +14,4 @@
         }       
       }
    }
+}
