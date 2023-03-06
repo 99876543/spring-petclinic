@@ -1,24 +1,16 @@
 pipeline {
-    agent { label gradleFile }
+    agent { label GIT }
     stages {
       stage('clone code') {
        steps {
           git url: 'https://github.com/99876543/spring-petclinic.git',
              branch: 'gradleFile'
-       }
-    }
-      stage('Define variable') {
-         steps {
-                Define a variable and use the GroovyClassLoader step to load the Gradle script
-                script {
-                    def gradleFile = new File("build.gradle")
-                    def gradle = new GroovyClassLoader().parseClass(gradleFile)
-                    println gradle
-         }
+        }
       }
       stage('build') {
-        steps { 
-          sh './gradle build'
+         steps { 
+           sh 'gradle init'
+           sh 'gradle build'
         }       
       }
    }
