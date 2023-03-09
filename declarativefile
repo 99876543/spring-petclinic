@@ -37,7 +37,7 @@ post {
       emailext body: "Build ${BUILD_NUMBER} has finished.", subject: 'Jenkins build notification', to: 'syedadnan786.mr@gmail.com'
       }
       failure {
-        mail subject: "Some of the steps are failing",
+        mail subject: "Pipeline failed",
         body: "Use this URL $(BUILD_URL) for more info ",
         to: 'syedadnan786.mr@gmail.com',
         from: 'qtdevops@qt.com'
