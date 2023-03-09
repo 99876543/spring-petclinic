@@ -31,9 +31,9 @@ pipeline {
           }
       }
   }
-}
-post {
-  always {
+  post {
+    always {
       body: 'Build ${BUILD_NUMBER} has finished.', subject: 'Jenkins build notification', to: 'syedadnan786.mr@gmail.com'
-  }
-}
+      }
+    }
+}  
