@@ -31,17 +31,11 @@ pipeline {
               junit testResults: '**/surefire-reports/TEST-*.xml'
           }
       }
-  }
-  post {
+}
+post {
     always {
       emailext body: "Build ${BUILD_NUMBER} has finished.", subject: 'Jenkins build notification', to: 'syedadnan786.mr@gmail.com'
       }
     }
-} 
-post {
-  always {
-     emailext body: "Failed ${BUILD_NUMBER} has finished.", subject: 'Jenkins failed notification', to: 'syedadnan786.mr@gmail.com'
-     }
-  }
-}
+ } 
 
