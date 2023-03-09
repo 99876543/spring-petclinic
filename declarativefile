@@ -15,8 +15,27 @@ pipeline {
          sh './mvnw package'
       }       
     }
-    stage('sonar analysis') {
-          steps {
+    stage('package') {
+            tools {
+                jdk 'JDK_17'
+            }
+            steps {
+                sh "mvn ${params.MAVEN_GOAL}"
+                rtMavenRun (
+                    tool: 'MAVEN_DEFAULT',
+                    pom: 'pom.xml',
+                    goals: 'clean install',
+                    deployerId: "MAVEN_DEPLOYER"
+
+                )
+                rtPublishBuildInfo (
+                    serverId: "ARTIFACTORY_SERVER"
+                )
+                //sh "mvn ${params.MAVEN_GOAL}"
+            }
+        }
+         stage('sonar analysis') {
+            steps {
             withSonarQubeEnv('SONARCLOUD') {
             sh './mvnw verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=syedadnan01_springpet'
               
