@@ -38,7 +38,7 @@ post {
       }
       failure {
         mail subject: "Pipeline failed",
-        body: "Use this URL $(BUILD_URL) for more info ",
+        body: "Use this URL (BUILD_URL) for more info ",
         to: 'syedadnan786.mr@gmail.com',
         from: 'qtdevops@qt.com'
       }
