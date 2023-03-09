@@ -22,5 +22,11 @@ pipeline {
             junit testResults: '**/surefire-reports/TEST-*.xml'
             }
         }
-    }
-}   
+      stage('sonar analysis') {
+        steps {
+             performing sonarqube analysis with "withSonarQubeENV(<Name of Server configured in Jenkins>)"
+             withSonarQubeEnv('SONAR_CLOUD') {
+              sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=syedadnan_springpet'
+     }
+   }
+}  
