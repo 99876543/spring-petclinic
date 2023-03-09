@@ -4,29 +4,31 @@ pipeline {
     }
     stages {
       stage('clone code') {
-       steps {
+            steps {
           git url: 'https://github.com/99876543/spring-petclinic.git',
              branch: 'declarative'
         }
       }
       stage('build') {
-         steps { 
+            steps { 
            sh './mvnw clean install'
            sh './mvnw package'
         }       
       }
-      stage('post build') {
-        steps {
-            archiveArtifacts artifacts: '**/target/spring-petclinic-3.0.0-SNAPSHOT.jar',
-                             onlyIfSuccessful: true
-            junit testResults: '**/surefire-reports/TEST-*.xml'
+      stage('sonar analysis') {
+            steps {
+           performing sonarqube analysis with "withSonarQubeENV(<Name of Server configured in Jenkins>)"
+           withSonarQubeEnv('SONAR_CLOUD') {
+            sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=syedadnan_springpet'
+                }
             }
         }
-      stage('sonar analysis') {
-        steps {
-             performing sonarqube analysis with "withSonarQubeENV(<Name of Server configured in Jenkins>)"
-             withSonarQubeEnv('SONAR_CLOUD') {
-              sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=syedadnan_springpet'
+        stage('post build') {
+            steps {
+                archiveArtifacts artifacts: '**/target/spring-petclinic-3.0.0-SNAPSHOT.jar',
+                                 onlyIfSuccessful: true
+                junit testResults: '**/surefire-reports/TEST-*.xml'
+            }
         }
-      }
+    }
 }
