@@ -29,4 +29,4 @@ pipeline {
               sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=syedadnan_springpet'
      }
    }
-}  
+}
