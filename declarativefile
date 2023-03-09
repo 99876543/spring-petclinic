@@ -38,3 +38,8 @@ pipeline {
       }
     }
 } 
+post {
+  failure {
+      mail to: 'syedadnan786.mr@gmail.com',
+           subject: "Pipeline failed: ${currentBuild.fullDisplayName}",
+           body: "The pipeline ${currentBuild.fullDisplayName} has failed. Build Failure."
