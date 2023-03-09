@@ -18,9 +18,9 @@ pipeline {
       stage('sonar analysis') {
         steps {
           withSonarQubeEnv('SONARCLOUD') {
-          sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=syedadnan_springpet'
-                
+          sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=syedadnan_springpet'        
         }
+      }
       }
       stage('post build') {
         steps {
