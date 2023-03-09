@@ -39,7 +39,9 @@ pipeline {
     }
 } 
 post {
-  failure {
-      mail to: 'syedadnan786.mr@gmail.com',
-           subject: "Pipeline failed: ${currentBuild.fullDisplayName}",
-           body: "The pipeline ${currentBuild.fullDisplayName} has failed. Build Failure."
+  always {
+     emailext body: "Failed ${BUILD_NUMBER} has finished.", subject: 'Jenkins failed notification', to: 'syedadnan786.mr@gmail.com'
+     }
+  }
+}
+
