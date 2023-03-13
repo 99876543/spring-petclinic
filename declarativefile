@@ -10,14 +10,18 @@ pipeline {
       }
     }
     stage('build') {
-          steps { 
+      steps { 
          sh './mvnw clean install'
          sh './mvnw package'
       }       
     }
-    
-         stage('sonar analysis') {
-            steps {
+    stage ('mvn deploy') {
+      steps {
+        sh './mvnw deploy'
+      }
+    }
+    stage('sonar analysis') {
+        steps {
             withSonarQubeEnv('SONARCLOUD') {
             sh './mvnw verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=syedadnan01_springpet'
               
