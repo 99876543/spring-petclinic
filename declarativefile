@@ -20,31 +20,11 @@ pipeline {
         sh './mvnw deploy'
       }
     }
-    stage('sonar analysis') {
-        steps {
-            withSonarQubeEnv('SONARCLOUD') {
-            sh './mvnw verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=syedadnan01_springpet'
-              
-          }
-        }
-      }
-      stage('post build') {
-          steps {
+    stage('post build') {
+      steps {
               archiveArtifacts artifacts: '**/target/spring-petclinic-3.0.0-SNAPSHOT.jar',
                                onlyIfSuccessful: true
               junit testResults: '**/surefire-reports/TEST-*.xml'
-          }
-      }
-}
-post {
-    always {
-      emailext body: "Build ${BUILD_NUMBER} has finished.", subject: 'Jenkins build notification', to: 'syedadnan786.mr@gmail.com'
-      }
-      failure {
-        mail subject: "Pipeline failed",
-        body: "Use this URL (BUILD_URL) for more info ",
-        to: 'syedadnan786.mr@gmail.com',
-        from: 'qtdevops@qt.com'
       }
     }
 }
