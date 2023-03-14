@@ -17,7 +17,8 @@ pipeline {
       }
       stage ('mvn deploy') {
         steps {
-          sh './mvnw deploy'
+          sh './mvnw deploy-DaltDeploymentRepository=my-repo::default::https://github.com/99876543/spring-petclinic.git'
+'
         }
       }
     }
