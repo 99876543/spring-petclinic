@@ -1,7 +1,7 @@
 pipeline {
     agent {label 'JENKINS'}
     environment {
-        MAVEN_HOME = tool 'Maven'
+        MAVEN_HOME = tool 'MAVEN_HOME'
         SSH_CREDENTIALS = credentials('adnan')
         REMOTE_HOST = 'remote-host'
         REMOTE_DIRECTORY = '/opt/spring-petclinic'
