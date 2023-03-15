@@ -10,7 +10,7 @@ pipeline {
         stage('package') {
             steps {
                 sh './mvnw clean package'
-                sh './mvnw deploy -DaltDeploymentRepository=id::https://github.com/99876543/spring-petclinic.git',
+                sh './mvnw deploy -DaltDeploymentRepository=id::https://github.com/99876543/spring-petclinic.git'
             }
         }
         stage('post build') {
