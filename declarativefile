@@ -31,8 +31,7 @@ pipeline {
             steps {
                 sshagent(credentials: ['ssh-key']) {
                     sh "ssh ${ubuntu}@${REMOTE_SERVER} 'java -jar /opt/spring-petclinic/*.jar > /dev/null 2>&1 &'"
-                }
             }
         }
     }
-}    
+}
