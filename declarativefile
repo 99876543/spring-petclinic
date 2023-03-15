@@ -1,21 +1,23 @@
 pipeline {
-  agent {label 'JENKINS'}
-stages('git clone') {
-  stage {
-    steps {
-      git url: 'https://github.com/99876543/spring-petclinic.git'
-          branch: 'declarative'
-    }
+  agent {
+      label 'JENKINS'
   }
-}
-  stage('Build') {
-    steps {
-      sh './mvnw clean package'
+  stages {
+    stage('clone code') {
+          steps {
+        git url: 'https://github.com/99876543/spring-petclinic.git',
+           branch: 'declarative'
+      }
     }
-  }
-  stage('Deploy') {
-    steps {
-       sh './mvnw deploy'
+    stage('build') {
+      steps { 
+         sh './mvnw clean install'
+         sh './mvnw package'
+      }       
     }
-  }
-}
+    stage ('mvn deploy') {
+      steps {
+        sh './mvnw deploy'
+      }
+    }
+} 
