@@ -15,8 +15,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 sshagent(['SSH_CREDENTIALS']) {
-                    sshCommand remote: "${REMOTE_HOST}", user: 'ubuntu', command: "mkdir -p ${REMOTE_DIRECTORY}"
-                    sshCommand remote: "${REMOTE_HOST}", user: 'ubuntu', command: "scp target/*.jar ubuntu@${REMOTE_HOST}:${REMOTE_DIRECTORY}"
+                    sshCommand remote: "${REMOTE_HOST}", user: 'ubuntu', command: "mkdir -p ${/opt/spring-petclinic}"
+                    sshCommand remote: "${REMOTE_HOST}", user: 'ubuntu', command: "scp target/*.jar ubuntu@${REMOTE_HOST}:${/opt/spring-petclinic}"
                 }
             }
         }
