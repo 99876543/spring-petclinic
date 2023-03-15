@@ -4,7 +4,7 @@ pipeline {
     environment {
         REMOTE_SERVER = 'REMOTE_SERVER'
         REMOTE_USER = 'ubuntu'
-        REMOTE_PASSWORD = credentials('adnan123')
+        REMOTE_PASSWORD = credentials('my-remote-password')
     }
     
     stages {
