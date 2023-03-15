@@ -13,7 +13,7 @@ pipeline {
                 sh './mvnw clean package'
             }
         }
-        stage {
+        stage('git clone') {
             steps {
                git url: 'https://github.com/99876543/spring-petclinic.git',
                      branch: 'declarative'
