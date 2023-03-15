@@ -1,24 +1,24 @@
 pipeline {
-  agent {
-      label 'JENKINS'
-  }
-  stages {
-    stage('clone code') {
-          steps {
-        git url: 'https://github.com/99876543/spring-petclinic.git',
-           branch: 'declarative'
-      }
+    agent {label 'JENKINS'}
+    environment {
+        MAVEN_HOME = tool 'Maven'
+        SSH_CREDENTIALS = credentials('adnan')
+        REMOTE_HOST = 'remote-host'
+        REMOTE_DIRECTORY = '/opt/spring-petclinic'
     }
-    stage('build') {
-      steps { 
-         sh './mvnw clean install'
-         sh './mvnw package'
-      }       
+    stages {
+        stage('Build') {
+            steps {
+                sh "${MAVEN_HOME}/bin/mvn clean package"
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sshagent(['SSH_CREDENTIALS']) {
+                    sshCommand remote: "${REMOTE_HOST}", user: 'ubuntu', command: "mkdir -p ${REMOTE_DIRECTORY}"
+                    sshCommand remote: "${REMOTE_HOST}", user: 'ubuntu', command: "scp target/*.jar ubuntu@${REMOTE_HOST}:${REMOTE_DIRECTORY}"
+                }
+            }
+        }
     }
-    stage ('mvn deploy') {
-      steps {
-        sh './mvnw deploy'
-      }
-    }
-} 
 }
