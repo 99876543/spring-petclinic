@@ -1,24 +1,39 @@
 pipeline {
-    agent {
-      label 'JENKINS'
+    agent {label 'JENKINS'}
+    
+    environment {
+        REMOTE_SERVER = 'REMOTE_SERVER'
+        REMOTE_USER = 'ubuntu'
+        REMOTE_PASSWORD = credentials('remote-password')
     }
+    
     stages {
-      stage('clone code') {
-        steps {
-          git url: 'https://github.com/99876543/spring-petclinic.git',
-             branch: 'declarative'
+        stage('Build') {
+            steps {
+                sh './mvnw clean package'
+            }
         }
-      }
-      stage('build') {
-        steps { 
-           sh './mvnw clean install'
-           sh './mvnw package'
-        }       
-      }
-      stage ('mvn deploy') {
-        steps {
-          sh './mvnw deploy-DaltDeploymentRepository=my-repo::default::https://github.com/99876543/spring-petclinic.git'
+        stage {
+            steps {
+               git url: 'https://github.com/99876543/spring-petclinic.git',
+                     branch: 'declarative'
+            }
         }
-      }
+        stage('Deploy') {
+            steps {
+                sshagent(credentials: ['ssh-key']) {
+                    sh "ssh ${ubuntu}@${REMOTE_SERVER} 'mkdir -p /opt/spring-petclinic'"
+                    sh "scp target/*.jar ${ubuntu}@${REMOTE_SERVER}:/opt/spring-petclinic"
+                }
+            }
+        }
+        
+        stage('Start Application') {
+            steps {
+                sshagent(credentials: ['ssh-key']) {
+                    sh "ssh ${ubuntu}@${REMOTE_SERVER} 'java -jar /opt/spring-petclinic/*.jar > /dev/null 2>&1 &'"
+                }
+            }
+        }
     }
-  }    
+}    
