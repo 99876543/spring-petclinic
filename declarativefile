@@ -1,28 +1,31 @@
- pipeline {
-  agent { label 'JENKINS' }
+pipeline {
+  agent {
+      label 'NPM'
+  }
   stages {
     stage('clone code') {
-     steps {
+          steps {
         git url: 'https://github.com/99876543/spring-petclinic.git',
            branch: 'declarative'
       }
     }
     stage('build') {
-       steps { 
-         sh './gradlew build'
-       }       
+      steps { 
+         sh './mvnw clean install'
+         sh './mvnw package'
+      }       
     }
-    stage('deploy') {
-       steps {
-         sh './gradlew deploy'
-       }
+    stage ('mvn deploy') {
+      steps {
+        sh './mvnw deploy'
+      }
     }
     stage('post build') {
-       steps {
-          archiveArtifacts artifacts: '**/target/spring-petclinic-3.0.0-SNAPSHOT.jar',
+      steps {
+              archiveArtifacts artifacts: '**/target/spring-petclinic-3.0.0-SNAPSHOT.jar',
                                onlyIfSuccessful: true
               junit testResults: '**/surefire-reports/TEST-*.xml'
           }
       }
-  }
+    }
 }    
