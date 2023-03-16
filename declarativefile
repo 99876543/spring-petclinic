@@ -15,11 +15,6 @@ pipeline {
          sh './mvnw package'
       }       
     }
-    stage ('mvn deploy') {
-      steps {
-        sh './mvnw deploy'
-      }
-    }
     stage('post build') {
       steps {
               archiveArtifacts artifacts: '**/target/spring-petclinic-3.0.0-SNAPSHOT.jar',
