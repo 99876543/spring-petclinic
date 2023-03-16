@@ -15,6 +15,14 @@ pipeline {
          sh './mvnw package'
       }       
     }
+    stage('sonar analysis') {
+        steps {
+            withSonarQubeEnv('SONARCLOUD') {
+            sh './mvnw verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=syedadnan01_springpet'
+              
+          }
+        }
+      }
     stage('post build') {
       steps {
               archiveArtifacts artifacts: '**/target/spring-petclinic-3.0.0-SNAPSHOT.jar',
