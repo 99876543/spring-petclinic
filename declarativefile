@@ -16,27 +16,27 @@ pipeline {
       }       
     }
     stage('sonar analysis') {
-        steps {
+      steps {
             withSonarQubeEnv('SONAR_CLOUD') {
             sh './mvnw verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=syed01_springpet -Dsonar.organization=syed01'
               
           }
-        }
       }
-      stage('post build') {
-        steps {
+    }
+    stage('post build') {
+      steps {
               archiveArtifacts artifacts: '**/target/spring-petclinic-3.0.0-SNAPSHOT.jar',
                                onlyIfSuccessful: true
               junit testResults: '**/surefire-reports/TEST-*.xml'
           }
-        }  
-      }
-      stage('Artifactory configuration') {
-        steps {
+      }  
+    }
+    stage ('Artifactory configuration') {
+      steps {
             rtServer (
                 id: "Artifactory",
                 url: 'https://syedadnan.jfrog.io/artifactory',
-                credentialsId: 'Artifactory'
+                credentialsId: 'JFROG_CLOUD_ADMIN'
             )
 
             rtMavenDeployer (
