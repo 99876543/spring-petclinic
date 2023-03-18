@@ -11,13 +11,14 @@ pipeline {
     }
     stage('build') {
       steps { 
-         sh './mvnw clean package'
+         sh './mvnw clean install'
+         sh './mvnw package'
       }       
     }
     stage('sonar analysis') {
         steps {
             withSonarQubeEnv('SONAR_CLOUD') {
-            sh './mvnw verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=syed01_petclinic'
+            sh './mvnw verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=syed01_springpet -Dsonar.organization=syed01'
               
           }
         }
@@ -29,5 +30,26 @@ pipeline {
               junit testResults: '**/surefire-reports/TEST-*.xml'
           }
       }
-    }
-}    
+      stage ('Artifactory configuration') {
+        steps {
+            rtServer (
+                id: "Artifactory",
+                url: 'https://syedadnan.jfrog.io/artifactory',
+                credentialsId: 'JFROG_CLOUD_ADMIN'
+            )
+
+            rtMavenDeployer (
+                id: "MAVEN_DEPLOYER",
+                serverId: "Artifactory",
+                releaseRepo: 'libs-release',
+                snapshotRepo: 'libs-snapshot'
+            )
+
+            rtMavenResolver (
+                id: "MAVEN_RESOLVER",
+                serverId: "Artifactory",
+                releaseRepo: 'libs-release',
+                snapshotRepo: 'libs-snapshot'
+            )
+        }
+    }    
