@@ -11,8 +11,7 @@ pipeline {
     }
     stage('build') {
       steps { 
-         sh './mvnw clean install'
-         sh './mvnw package'
+         sh './mvnw clean package'
       }       
     }
     stage('sonar analysis') {
