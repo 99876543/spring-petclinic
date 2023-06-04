@@ -1,0 +1,26 @@
+---
+ - name: installing dotnet in centos
+   hosts: localhost
+   become: yes
+   tasks:
+     - name: Add the Microsoft package signing key
+       ansible.builtin.get_url:
+         url: https://packages.microsoft.com/config/centos/7/packages-microsoft-prod.rpm
+         dest: /tmp
+     - name: Install package
+       ansible.builtin.yum:
+         name: /tmp/packages-microsoft-prod.rpm
+         state: present
+     - name: Install dotnet-sdk-6.0
+       ansible.builtin.yum:
+         name: dotnet-sdk-6.0
+         state: present
+     - name: runtime-6.0
+       ansible.builtin.yum:
+         name: aspnetcore-runtime-6.0
+         state: present
+    - name: runtime-6.0
+      ansible.builtin.yum:
+        name: runtime-6.0
+        state: present
+     

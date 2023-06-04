@@ -1,0 +1,42 @@
+---
+- name: Install dotnet on ubuntu and centos 7
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: add repository
+      ansible.builtin.get_url:
+        url: https://packages.microsoft.com/config/ubuntu/22.10/packages-microsoft-prod.deb
+        dest: /tmp
+    - name: Install dpkg package
+      ansible.builtin.dpkg_selections:
+        name: packages-microsoft-prod.deb
+        selection: install
+    - name: remove some permissions
+      ansible.builtin.file:
+        path: /home/ubuntu/packages-microsoft-prod.deb
+        state: present
+    - name: update and upgrade  apt package
+      ansible.builtin.apt:
+        upgrade: yes
+    - name: Install dotnet-sdk
+      ansible.builtin.package:
+        name: dotnet-sdk-6.0
+        state: present
+    - name: update and upgrade  apt package
+      ansible.builtin.apt:
+        upgrade: yes
+    - name: Install aspnetcore-runtime-6.0
+      ansible.builtin.package:
+        name: aspnetcore-runtime-6.0
+        state: present
+    
+
+
+
+
+    
+    
+    
+    
+
+
