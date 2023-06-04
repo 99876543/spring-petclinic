@@ -1,0 +1,28 @@
+pipeline {
+  agent { label 'JENKINS' }
+  stages {
+    stage('clone code') {
+     steps {
+        git url: 'https://github.com/99876543/spring-petclinic.git',
+           branch: 'declarative'
+      }
+    }
+    stage('build') {
+       steps { 
+         sh './gradlew build'
+       }       
+    }
+    stage('deploy') {
+       steps {
+         sh './gradlew deploy'
+       }
+    }
+    stage('post build') {
+       steps {
+          archiveArtifacts artifacts: '**/target/gameoflife.war',
+                               onlyIfSuccessful: true
+              junit testResults: '**/surefire-reports/TEST-*.xml'
+          }
+      }
+  }
+} 
