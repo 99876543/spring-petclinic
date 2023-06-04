@@ -1,0 +1,13 @@
+trigger:
+- another-test
+
+pool:
+  name: 'default'
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: ansible-playbook /home/adnan/java/java.yml
+  displayName: 'Run Ansible Playbook'
+- script: java --version
+  displayName: 'Check java version'
+- script: 

@@ -1,0 +1,22 @@
+---
+ - name: Run spc service file
+   hosts: localhost
+   become: yes
+   tasks:
+     - name: install jarfile
+       ansible.builtin.get_url:
+         url: https://adnanb1.s3.ap-south-1.amazonaws.com/spring-petclinic-2.7.3.jar
+         dest: /home/ubuntu
+         owner: ubuntu
+         group: ubuntu
+     - name: Copy file with owner and permissions
+       ansible.builtin.copy:
+         src: /home/ubuntu/spc1.service
+         dest: /etc/systemd/system/
+         mode: '777'
+     - name: Enable a timer unit for spc1.service
+       ansible.builtin.systemd:
+         name: spc1.service
+         state: started
+         enabled: yes
+         

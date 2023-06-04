@@ -1,0 +1,25 @@
+trigger:
+- efficient-webjars
+
+pool:
+    name: 'Default'
+    vmImage: 'ubuntu-latest'
+    
+steps:
+- task: Maven@3
+  inputs:
+    mavenPOMFile: 'pom.xml'   
+    mavenDirectory: /home/ubuntu/apache-maven-3.9.0
+    mavenVersionOption: 'Path'
+    javaHomeOption: 'Path'
+    jdkVersionOption: '1.17'
+    jdkDirectory: /usr/lib/jvm/java-17-openjdk-amd64
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    goals: 'package'
+
+- script: aws s3 cp /home/ubuntu/myagent/_work/4/s/target/spring-petclinic-2.7.3.jar s3://adnanb1/
+  
+
+

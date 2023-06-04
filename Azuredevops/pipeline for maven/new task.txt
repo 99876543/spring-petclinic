@@ -1,0 +1,11 @@
+create a self host agent
+and install maven 
+and java 17 
+ install awscli
+ and config aws  
+ansible
+after use maven to build spring pet clinic in pipeline 
+and upload build jarfile  in s3 bucket
+now write an ansible playbook to download the url of jarfile which is in s3 and set path of service file
+create a service file for spring pet clinic
+and check status

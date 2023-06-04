@@ -1,0 +1,15 @@
+yis5df6fnsku5rk3abjeskc2jm6qdlkwr2irolcc37gumohhwroq
+
+[default]
+aws_access_key_id = AKIAWGGORSEUJO6ZWCXQ
+aws_secret_access_key = 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
+[produser]
+aws_access_key_id = aws configure --profile produser
+aws_secret_access_key = AKIAI44QH8DHBEXAMPLE
+ 
+ [default]
+region = ap-south-1
+output = json
+[profile produser]
+region = je7MtGbClwBF/2Zp9Utk/h3yCo8nvbEXAMPLEKEY
+output = us-east-1

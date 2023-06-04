@@ -1,0 +1,29 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- checkout: self
+  persistCredentials: true
+
+- task: Maven@3
+  inputs:
+    mavenPomFile: 'path/to/pom.xml'
+    goals: 'clean install'
+    publishJUnitResults: true
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.11'
+    mavenAuthenticateFeed: false
+    mavenSettingsFile: '$(Build.SourcesDirectory)/settings.xml'
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFiles: '**/target/surefire-reports/TEST-*.xml'
+    testRunTitle: 'Maven Tests'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    artifactName: 'my-maven-artifact'
+    pathtoPublish: '$(Build.SourcesDirectory)/target'

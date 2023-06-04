@@ -1,0 +1,17 @@
+trigger:
+- main 
+
+pool:
+    name: 'Default'
+    vmImage: 'ubuntu-latest'
+
+steps:
+- script: |
+    sudo apt update
+- script: |
+    sudo apt install openjdk-17-jdk -y
+- script: |
+    sudo apt install maven -y
+- script: |
+    mvn --version
+  displayName: check mvn version

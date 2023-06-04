@@ -1,0 +1,11 @@
+---
+pool:
+  name: "Azure-Pipelines"
+  vmImage: ubuntu-latest
+
+trigger:
+  - main
+
+steps:
+  - script: echo "hello world"
+    displayName: 'hi this is adnan'

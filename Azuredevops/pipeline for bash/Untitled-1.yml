@@ -1,0 +1,16 @@
+trigger:
+- another-test
+
+pool:
+  name: 'default'
+  vmImage: 'ubuntu-latest'
+
+steps:
+- bash: |
+    echo "##[group]Beginning of steps"
+    echo "##[hello]hello adnan"
+    echo "##[hi]hi adnan"
+    echo "##[how]how r u adnan"
+    echo "##[debug]Debug adnan"
+    echo "##[command]Command-line being run"
+    echo "##[endgroup]"

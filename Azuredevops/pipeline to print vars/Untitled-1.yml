@@ -1,0 +1,11 @@
+trigger:
+- another-test
+    
+pool:
+  name: 'default'
+  vmImage: 'ubuntu-latest'
+    
+steps:
+- script: printenv
+  displayName: 'Run  environmental variable'
+    

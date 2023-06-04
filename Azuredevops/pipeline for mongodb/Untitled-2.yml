@@ -1,0 +1,11 @@
+trigger:
+    - another-test
+    
+pool:
+  name: 'default'
+  vmImage: 'ubuntu-latest'
+    
+    steps:
+    - script: ansible-playbook /home/adnan/mongod/mongodb
+      displayName: 'Run Ansible Playbook'
+   

@@ -1,0 +1,13 @@
+[Unit]
+Description=spring-petclinic
+
+
+[Service]
+User=adnan
+ExecStart=/home/adnan/spc
+ExecReload=java -jar spring-petclinic-2.7.3.jar
+Restart=always
+
+
+[Install]
+WantedBy=multi-user.target
