@@ -1,0 +1,6 @@
+# First make a directory named app
+# Enter into app directory and create Dockerfile
+
+  # create a file named requirements.txt with this content
+Flask==2.0.2
+requests==2.26.0
