@@ -1,0 +1,88 @@
+---
+ - name: installing wildfly on centos
+   hosts: localhost
+   become: yes
+   tasks:
+     - name: install java-jdk
+       ansible.builtin.yum:
+         name: java-11-openjdk-devel
+         update_cache: yes
+         state: present
+     - name: install wget
+       ansible.builtin.yum:
+         name: wget
+         state: present
+     - name: install wildfly
+       ansible.builtin.get_url:
+         url: https://github.com/wildfly/wildfly/releases/download/26.1.3.Final/wildfly-26.1.3.Final.tar.gz
+         dest: /tmp
+         owner: wildfly
+         group: wildfly
+     - name: Extract wildfly
+       ansible.builtin.unarchive:
+         src: /tmp/wildfly-26.1.3.Final.tar.gz 
+         dest: /tmp
+         remote_src: yes
+     - name: movefile
+       ansible.builtin.copy:
+         src: /tmp/wildfly-26.1.3.Final/
+         dest: /opt/wildfly
+         remote_src: yes
+     - name: groupadd 
+       ansible.builtin.group:
+         name: wildfly
+         state: present
+     - name: useradd
+       ansible.builtin.user:
+         name: wildfly
+         group: wildfly
+         home: /opt/wildfly
+         shell: /sbin/nologin wildfly
+         state: present
+     - name: creating directory
+       ansible.builtin.file:
+         dest: /etc/wildfly
+         group: wildfly
+         owner: wildfly
+         state: directory
+         mode: '777'
+     - name: wildfly configuration
+       ansible.builtin.copy:
+         src: /opt/wildfly/docs/contrib/scripts/systemd/wildfly.conf
+         dest: /etc/wildfly/
+         owner: wildfly
+         group: wildfly
+         mode: '777'
+         remote_src: yes
+     - name: wildfly service
+       ansible.builtin.copy:
+         src: /opt/wildfly/docs/contrib/scripts/systemd/wildfly.service
+         dest: /etc/systemd/system/
+         owner: wildfly
+         group: wildfly
+         mode: '777'
+         remote_src: yes
+     - name: launch script
+       ansible.builtin.copy:
+         src: /opt/wildfly/docs/contrib/scripts/systemd/launch.sh
+         dest: /opt/wildfly/bin/
+         owner: wildfly
+         group: wildfly
+         mode: '777'
+         remote_src: yes
+     - name: Adding execute permissions to shell file
+       ansible.builtin.command: sudo chmod +x /opt/wildfly/bin/launch.sh
+     - name: Change file ownership, group and permissions
+       ansible.builtin.file:
+         path: /opt/wildfly
+         owner: wildfly
+         group: wildfly
+         mode: '777'
+     - name: start wildfly
+       ansible.builtin.systemd:
+         name: wildfly
+         state: started
+         enabled: yes
+   
+
+      

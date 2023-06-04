@@ -1,0 +1,33 @@
+---
+ - name: install jenkins on ubuntu
+   hosts: localhost
+   become: yes
+   tasks:
+     - name: Add the repository key to the system
+       ansible.builtin.apt_key:
+         url: 'https://pkg.jenkins.io/debian-stable/jenkins.io.key'
+         state: present
+     - name: append the Debian package repository
+       ansible.builtin.get_url:
+         repo:  https://pkg.jenkins.io/debian-stable binary/
+         state: present
+         filename: jenkins
+     - name: update apt
+       apt:
+         update_cache: yes
+         state: latest
+     - name: install java
+       ansible.builtin.apt:
+         name: openjdk-11-jdk
+         update_cache: yes
+         state: present
+     - name: Install jenkins
+       ansible.builtin.package:
+         update_cache: yes
+         name: jenkins
+         state: present
+     - name: Start and enable jenkins
+       ansible.builtin.systemd
+         name: jenkins
+         enabled: yes
+

@@ -1,0 +1,87 @@
+---
+ - name: Install nopcommerce on ubuntu
+   hosts: all
+   become: yes
+   tasks:
+     - name: Download foo.conf
+       ansible.builtin.get_url:
+         url: https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb
+         dest: /tmp
+         mode: '777'
+     - name: Install dpkg
+       ansible.builtin.dpkg_selections:
+         name: packages-microsoft-prod.deb
+         selection: install
+     - name: update dependencies
+       apt:
+         update_cache: yes
+         state: present
+     - name: Update apt and install aspnetcore-runtime
+       ansible.builtin.package:
+         name:
+           - apt-transport-https
+           - aspnetcore-runtime-6.0
+         state: present
+     - name: Install nginx
+       ansible.builtin.package:
+         name: nginx
+         state: present
+     - name: start nginx
+       ansible.builtin.systemd:
+         name: nginx
+         state: started
+     - name: Copy file with owner and permissions
+       ansible.builtin.copy:
+         src: /home/adnan/nopcommerce/default
+         dest: /etc/nginx/sites-available/default
+         mode: '777'
+     - name: Make directory
+       ansible.builtin.file:
+         path: /var/www/nopCommerce
+         mode: '777'
+         state: directory
+     - name: download zipfile url
+       ansible.builtin.get_url:
+         url: https://github.com/nopSolutions/nopCommerce/releases/download/release-4.60.2/nopCommerce_4.60.2_NoSource_linux_x64.zip
+         dest: /var/www/nopCommerce
+         mode: '777'
+     - name: Install unzip
+       ansible.builtin.package:
+         name: unzip
+         state: present
+     - name: install unzip file
+       ansible.builtin.unarchive:
+         src: /var/www/nopCommerce/nopCommerce_4.60.2_NoSource_linux_x64.zip
+         dest: /var/www/nopCommerce
+         remote_src: yes
+     - name: Make directory
+       ansible.builtin.file:
+         path: /var/www/nopCommerce/bin
+         mode: '777'
+         state: directory
+     - name: Make directory
+       ansible.builtin.file:
+         path: /var/www/nopCommerce/logs
+         mode: '777'
+         state: directory
+     - name: Change group
+       ansible.builtin.file:
+         path: /var/www/data nopCommerce/
+         mode: '777'
+     - name: Change file ownership
+       ansible.builtin.file:
+         path: /var/www/data nopCommerce/
+         mode: '777'
+     - name: Copy file with owner and permissions
+       ansible.builtin.copy:
+         src: /home/adnan/nopcommerce/default
+         dest: /etc/systemd/system/nopCommerce.service
+         mode: '777'
+     - name: start nopCommerce service
+       ansible.builtin.service:
+         name: nopCommerce.service
+         state: started
+
+        
+         
+              

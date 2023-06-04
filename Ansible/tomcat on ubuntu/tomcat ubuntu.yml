@@ -1,0 +1,66 @@
+---
+- name: install tomcat 10.1.5 in ubuntu
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Add the user tomcat
+      ansible.builtin.user:
+        name: tomcat
+        shell: /opt/tomcat 
+        state: present
+    - name: Install java
+      ansible.builtin.package:
+       name: openjdk-11-jdk
+       state: present
+    - name: enter in tmp directory
+      ansible.builtin.get_url:
+        url: https://dlcdn.apache.org/tomcat/tomcat-10/v10.0.27/bin/apache-tomcat-10.0.27.tar.gz
+        dest: /tmp
+        mode: '777'
+    - name: Extract file
+      ansible.builtin.unarchive:
+        src: /tmp/apache-tomcat-10.0.27.tar.gz
+        dest: /opt         
+       remote_src: yes
+    - name: Give insecure permissions to an existing file
+      ansible.builtin.file:
+        path: /opt/tomcat
+        group: tomcat
+        owner: tomcat         
+         mode: '777'
+    - name: Change file ownership, group and permissions
+      ansible.builtin.file:
+        path: /opt/tomcat/bin
+        owner: tomcat
+        group: tomcat  
+        state: directory                                                                                                                                                                                                                                                                         state: directory
+    - name: create a system unit file 
+      ansible.builtin.copy:
+        src: /home/adnan/tomcat/users.xml
+        dest: /opt/tomcat/users.xml
+        owner: tomcat                    
+        group: tomcat
+    - name: create a host manager copy file
+      ansible.builtin.copy:
+        src: /home/adnan/tomcat/context.xml
+        dest: /opt/tomcat/context.xml
+        owner: tomcat
+        group: tomcat  
+    - name: Reload service tomcat
+      ansible.builtin.copy:
+        src: /home/adnan/tomcat/tomcat.service
+        dest: /opt/tomcat/tomcat.service
+        owner: tomcat       
+        group: tomcat
+     - name: daemon reload and start tomcat
+       ansible.builtin.systemd:
+         name: tomcat
+         daemon_reload: yes
+         enabled: yes
+         state: started
+
+
+
+
+  
+      

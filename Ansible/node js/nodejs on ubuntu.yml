@@ -1,0 +1,12 @@
+---
+ - name: Install java nodejs on ubuntu
+   hosts: all
+   become: yes
+   tasks:
+     - name: update apt
+       ansible.builtin.apt:
+         update_cache: yes
+     - name: install java node.js
+       ansible.builtin.apt:
+         name: nodejs
+         state: present

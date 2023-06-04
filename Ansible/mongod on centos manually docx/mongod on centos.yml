@@ -1,0 +1,32 @@
+---
+ - name: Installing mongodb in centos
+   hosts: all
+   become: yes
+   tasks:
+     - name: Add repository
+       ansible.builtin.yum_repository:
+         name: epel
+         description: EPEL YUM repo
+         baseurl: https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/4.0
+         state: present
+     - name: Copy file with owner and permissions
+       ansible.builtin.copy:
+         src: /home/adnan/mongod/mongodb-org.repo
+         dest: /etc/yum.repos.d/mongodb-org.repo
+         mode: '777'
+     - name: Install mongodb
+       ansible.builtin.yum:
+         name: mongodb-org
+         state: present
+      - name: create a system unit file
+        ansible.builtin.copy:
+          src: /home/adnan/mongod/mongod.conf
+          dest: /etc/mongod.conf
+          mode: '777'
+     - name: reload and start mongod
+       ansible.builtin.systemd:
+         name: mongod
+         enabled: yes
+         state: started
+        
+      

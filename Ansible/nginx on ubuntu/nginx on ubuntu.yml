@@ -1,0 +1,28 @@
+---
+- name: install nginx on ubuntu
+  hosts: all
+  become: yes
+  tasks:
+    - name: apt update
+      ansible.builtin.apt:
+        name: nginx
+        update_cache: yes
+    - name: install nginx
+      ansible.builtin.apt
+        name: nginx
+        state: present
+    - name: Restart service 
+      ansible.builtin.service:
+        name: nginx
+        state: restarted
+    - name: Install php
+      ansible.builtin.package:
+        name: php
+        state: present
+      With_Items:
+        - php-cli 
+        - php-fpm 
+        - php-mysql 
+        - php-zip 
+        - php-gd 
+    

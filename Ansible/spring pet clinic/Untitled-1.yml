@@ -1,0 +1,16 @@
+---
+ - name: install tomcat 10.1.5 in ubuntu
+   hosts: localhost
+   become: yes
+   tasks: 
+     - name: Installing Java
+       package:
+         name: openjdk-17-jdk
+         state: present
+     - name: Install spring pet clinic
+       ansible.builtin.get_url:
+       url: https://referenceapplicationskhaja.s3.us-west-2.amazonaws.com/spring-petclinic-2.4.2.jar
+       dest: /home/ubuntu
+       mode: '777'
+
+         

@@ -1,0 +1,35 @@
+---
+ - name: install mongodb on ubuntu
+   hosts: all
+   become: yes
+   tasks:
+     - name: Install all dependencies
+       ansible.builtin.apt:
+         name:
+           - dirmngr
+           - gnupg
+           - apt-transport-https
+           - ca-certificates
+           - software-properties-common
+         update_cache: yes
+         state: present
+     - name: Download and add mongodb
+       ansible.builtin.apt_key:
+         url: https://www.mongodb.org/static/pgp/server-4.4.asc
+         state: present
+     - name: create a list of repository
+       ansible.builtin.apt_repository:
+         repo: deb [arch=amd64] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse
+         filename: mongodb-org-4.4
+         state: present
+     - name: create another list  of repository
+       ansible.builtin.apt_repository:
+         repo: deb http://security.ubuntu.com/ubuntu focal-security main
+         state: present
+     - name: Install libssl1.1
+       apt:
+         name: libssl1.1
+         update_cache: yes
+         state: present
+    
+
